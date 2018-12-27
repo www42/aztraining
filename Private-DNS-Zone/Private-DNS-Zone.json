@@ -1,0 +1,39 @@
+{
+  "properties": {
+    "lenses": {
+      "0": {
+        "order": 0,
+        "parts": {
+          "0": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 15,
+              "rowSpan": 7
+            },
+            "metadata": {
+              "inputs": [],
+              "type": "Extension/HubsExtension/PartType/MarkdownPart",
+              "settings": {
+                "content": {
+                  "settings": {
+                    "content": "# Use Azure DNS for private domains\n\n[Microsoft docs](https://docs.microsoft.com/en-us/azure/dns/private-dns-overview)\n\n![scenario](https://github.com/www42/az-100/blob/master/scenario.png?raw=true)\n\n## Prerequisites: Create VNet, VM\n\nSet variables (bash)\n\n```bash\nVNetName=\"TestVNet3\"\nRGName=\"TestRG\"\nLocation=\"westeurope\"\n```\n\nCreate VNet\n\n```bash\naz network vnet create \\\n  --name $VNetName \\\n  --resource-group $RGName \\\n  --location $Location \\\n  --address-prefix 172.21.0.0/16 \\\n  --subnet-name backendSubnet \\\n  --subnet-prefix 172.21.128.0/25\n```\n\n```bash\naz vm list --show-details -o table\n```\n\n\n\nHier geht es weiter.\n",
+                    "title": "",
+                    "subtitle": ""
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "Private DNS Demo",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "INSERT LOCATION",
+  "tags": {
+    "hidden-title": "Private DNS Demo"
+  },
+  "apiVersion": "2015-08-01-preview"
+}
