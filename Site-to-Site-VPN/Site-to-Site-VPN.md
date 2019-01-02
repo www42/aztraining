@@ -189,7 +189,9 @@ vpncfg {
 ### Update Public IP Address (LNG)
 
 ```bash
+Lng_Pip=$(host -4 nielsabel.ddns.net  | awk '/has address/{print $4}')
+
 az network local-gateway update --name $Lng_Name \
                                 --resource-group $RGroup \
-                                --gateway-ip-address `host -4 nielsabel.ddns.net  | awk '/has address/{print $4}'`
+                                --gateway-ip-address $Lng_Pip
 ```
