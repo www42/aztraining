@@ -1,24 +1,10 @@
-# Site-to-Site VPN to Azure
+# Lab: Site-to-Site VPN to Azure
 
-## Vocabulary
-
-### Policy based vs. route based VPN gateway
-
-[About policy-based and route-based VPN gateways (Microsoft docs)](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-connect-multiple-policybased-rm-ps#about)
-
-Policy based VPN gateway (Image by Microsoft)
-
-![policy based gw](https://docs.microsoft.com/en-us/azure/vpn-gateway/media/vpn-gateway-connect-multiple-policybased-rm-ps/policybasedmultisite.png)
-
-Route bases VPN gateway (Image by Microsoft)
-
-![route based gw](https://docs.microsoft.com/en-us/azure/vpn-gateway/media/vpn-gateway-connect-multiple-policybased-rm-ps/routebasedmultisite.png)
-
-## Lab
-
-### Scenario
+## Scenario
 
 ![Scenario](https://github.com/www42/aztraining/blob/master/Site-to-Site-VPN/Site-to-Site-VPN.png?raw=true)
+
+## Instructions
 
 ### Set Variables in Bash
 
