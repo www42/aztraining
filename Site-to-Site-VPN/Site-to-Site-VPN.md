@@ -2,7 +2,7 @@
 
 ## Scenario
 
-![Scenario](https://github.com/www42/aztraining/blob/master/Site-to-Site-VPN/Site-to-Site-VPN.png?raw=true)
+![Scenario](https://github.com/www42/aztraining/blob/master/Site-to-Site-VPN/scenario.png?raw=true)
 
 ## Instructions
 
