@@ -1,0 +1,43 @@
+# Lab: Static WebApp - Super Simple Deployment
+## Scenario
+## Lab Instructions
+### Start Cloud Shell (Bash)
+az account list -o table
+
+### Set Variables
+Location="westeurope"
+App_Name="viking"
+
+
+### Add an Az Cli extension
+az extension list-available -o table
+az extension add --name webapp
+az extension list -o table
+az extension show --name webapp
+
+### Copy static HTML files from GitHub repo
+mkdir ~/git
+cd ~/git
+git clone https://github.com/Azure-Samples/html-docs-hello-world.git
+ls -l
+
+### Create and deploy WebApp
+cd html-docs-hello-world
+az webapp up --location $Location --name $App_Name
+
+### Browse the WebApp
+
+### Discover the WebApp
+az webapp list -o table
+az webapp list -o json --query '[0].resourceGroup' 
+RGroup=$(az webapp list -o json --query '[0].resourceGroup' | tr -d '"')
+az webapp show --name $App_Name --resource-group $RGroup
+
+### Make some changes to and redeploy WebApp
+vi index.html
+az webapp up --location $Location --name $App_Name
+
+
+### Remove WebApp by removing resource group
+az group delete --name $RGroup --yes --no-wait
+az group list -o table

@@ -4,7 +4,9 @@
 
 ![Scenario](https://github.com/www42/aztraining/blob/master/Site-to-Site-VPN/scenario.png?raw=true)
 
-## Instructions
+## Lab Instructions
+
+### Start Cloud Shell (Bash)
 
 ### Set Variables in Bash
 
