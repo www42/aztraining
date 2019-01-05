@@ -1,20 +1,28 @@
 # Lab: Static WebApp - Super Simple Deployment
 
-## Scenario
+## Lab Scenario
 
-Create a static HTML WebApp. Static HTML code is copied from a GitHub repo. Deployment is done by running
+Create a static HTML WebApp. Static HTML code is copied from a GitHub repo. Deployment is done super simply by running a two parameter az command:
 
 ```bash
 az webapp run --name foo --location westeurope
 ```
 
-See Microsoft docs [Create a static HTML web app in Azure](https://docs.microsoft.com/en-us/azure/app-service/app-service-web-get-started-html).
+---
 
-## Lego building blocks
+## This Lab ist stolen from
+
+Microsoft docs: [Create a static HTML web app in Azure](https://docs.microsoft.com/en-us/azure/app-service/app-service-web-get-started-html).
+
+---
+
+## Lego Building Blocks
 
 * [Azure App Service - Overview](https://azure.microsoft.com/en-us/resources/videos/azure-app-service-overview/)
 * [Az Cli extensions](https://github.com/Azure/azure-cli/tree/master/doc/extensions)
 * [GitHub repos](https://help.github.com/articles/cloning-a-repository/)
+
+---
 
 ## Lab Instructions
 
@@ -24,7 +32,7 @@ See Microsoft docs [Create a static HTML web app in Azure](https://docs.microsof
 az account list -o table
 ```
 
-### Set Variables
+### Set variables
 
 ```bash
 Location="westeurope"
@@ -33,7 +41,7 @@ App_Name="viking"
 
 ### Add an Az Cli extension
 
-[Add an extension](https://docs.microsoft.com/de-de/cli/azure/extension?view=azure-cli-latest#az-extension-add)
+Syntax: [Add an extension](https://docs.microsoft.com/de-de/cli/azure/extension?view=azure-cli-latest#az-extension-add)
 
 ```bash
 az extension list-available -o table
@@ -53,7 +61,7 @@ ls -l
 
 ### Create and deploy WebApp
 
-[Create and deploy existing local code to the WebApp](https://docs.microsoft.com/en-us/cli/azure/webapp?view=azure-cli-latest#az-webapp-up)
+Syntax: [Create and deploy existing local code to the WebApp](https://docs.microsoft.com/en-us/cli/azure/webapp?view=azure-cli-latest#az-webapp-up)
 
 ```bash
 cd html-docs-hello-world
@@ -80,7 +88,7 @@ az webapp up --location $Location --name $App_Name
 
 ### Remove WebApp by removing resource group
 
-[Delete a resource group](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-delete)
+Syntax: [Delete a resource group](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-delete)
 
 ```bash
 az group delete --name $RGroup --yes --no-wait

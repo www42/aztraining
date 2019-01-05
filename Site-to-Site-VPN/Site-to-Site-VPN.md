@@ -1,14 +1,36 @@
 # Lab: Site-to-Site VPN to Azure
 
-## Scenario
+## Lab Scenario
 
 ![Scenario](https://github.com/www42/aztraining/blob/master/Site-to-Site-VPN/scenario.png?raw=true)
+
+---
+
+## This Lab ist stolen from
+
+Microsoft docs: [Create a virtual network with a Site-to-Site VPN connection using CLI](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-cli)
+
+---
+
+## Lego building blocks
+
+* [Azure VPN Gateway](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpngateways)
+
+* [On Prem VPN Devices](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-devices)
+
+* [Gateway Subnet](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub)
+
+---
 
 ## Lab Instructions
 
 ### Start Cloud Shell (Bash)
 
-### Set Variables in Bash
+```bash
+az account list -o table
+```
+
+### Set Variables
 
 ```bash
 # General
@@ -35,12 +57,11 @@ Lng_LocalAddressPrefix="192.168.42.0/24"
 # VPN Connection (Vpn)
 Vpn_Name="Adatum-Berlin-VPN"
 Vpn_SharedKey='%0anbdabK=Fdce2f0d414a6!c1a4b1fk'
-
 ```
 
 ### Create Resource Group (RG)
 
-[Create a new resource group](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create)
+Syntax: [Create a new resource group](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create)
 
 ```bash
 az group create --name $RGroup --location $Location
@@ -50,7 +71,7 @@ az group list -o table
 
 ### Create Virtual Network (VNet)
 
-[Create a virtual network](https://docs.microsoft.com/en-us/cli/azure/network/vnet?view=azure-cli-latest#az-network-vnet-create)
+Syntax: [Create a virtual network](https://docs.microsoft.com/en-us/cli/azure/network/vnet?view=azure-cli-latest#az-network-vnet-create)
 
 ```bash
 az network vnet create --name $VNet_Name \
@@ -65,7 +86,7 @@ az network vnet list -o table
 
 ### Create Subnet "GatewaySubnet"
 
-[Create a subnet](https://docs.microsoft.com/en-us/cli/azure/network/vnet/subnet?view=azure-cli-latest#az-network-vnet-subnet-create)
+Syntax: [Create a subnet](https://docs.microsoft.com/en-us/cli/azure/network/vnet/subnet?view=azure-cli-latest#az-network-vnet-subnet-create)
 
 ```bash
 az network vnet subnet create --name GatewaySubnet \
@@ -78,7 +99,7 @@ az network vnet subnet list --resource-group $RGroup --vnet-name $VNet_Name -o t
 
 ### Create Public IP (PIP)
 
-[Create a public IP address](https://docs.microsoft.com/en-us/cli/azure/network/public-ip?view=azure-cli-latest#az-network-public-ip-create)
+Syntax: [Create a public IP address](https://docs.microsoft.com/en-us/cli/azure/network/public-ip?view=azure-cli-latest#az-network-public-ip-create)
 
 ```bash
 az network public-ip create --name $Vng_Pip \
@@ -91,7 +112,7 @@ az network public-ip list -o table --resource-group $RGroup
 
 ### Create Virtual Network Gateway (VNG)
 
-[Create a virtual network gateway](https://docs.microsoft.com/en-us/cli/azure/network/vnet-gateway?view=azure-cli-latest#az-network-vnet-gateway-create)
+Syntax: [Create a virtual network gateway](https://docs.microsoft.com/en-us/cli/azure/network/vnet-gateway?view=azure-cli-latest#az-network-vnet-gateway-create)
 
 ```bash
 az network vnet-gateway create --name $Vng_Name \
@@ -109,7 +130,7 @@ az network vnet-gateway list --resource-group $RGroup -o table
 
 ### Create Local Network Gateway (LNG)
 
-[Create a local VPN gateway](https://docs.microsoft.com/en-us/cli/azure/network/local-gateway?view=azure-cli-latest#az-network-local-gateway-create)
+Syntax: [Create a local VPN gateway](https://docs.microsoft.com/en-us/cli/azure/network/local-gateway?view=azure-cli-latest#az-network-local-gateway-create)
 
 ```bash
 az network local-gateway create --name $Lng_Name \
@@ -124,7 +145,7 @@ az network local-gateway list --resource-group $RGroup -o table
 
 ### Create Connection
 
-[Create a VPN connection](https://docs.microsoft.com/en-us/cli/azure/network/vpn-connection?view=azure-cli-latest#az-network-vpn-connection-create)
+Syntax: [Create a VPN connection](https://docs.microsoft.com/en-us/cli/azure/network/vpn-connection?view=azure-cli-latest#az-network-vpn-connection-create)
 
 ```bash
 az network vpn-connection create --name $Vpn_Name \
@@ -137,9 +158,11 @@ az network vpn-connection create --name $Vpn_Name \
 az network vpn-connection list --resource-group $RGroup -o table
 ```
 
-## On Prem Gateway - Example: Fritz!Box
+## On Prem VPN Device - Example: Fritz!Box
 
 Bjoern Olausson: [Site-to-Site VPN with Fritz!Box](https://olausson.de/news/9-news/23-azure-fritz-box-site-to-site-vpn-connetion)
+
+![Fritz!Box import VPN cfg]()
 
 ```cfg
 vpncfg {
