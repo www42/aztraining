@@ -162,7 +162,7 @@ az network vpn-connection list --resource-group $RGroup -o table
 
 Bjoern Olausson: [Site-to-Site VPN with Fritz!Box](https://olausson.de/news/9-news/23-azure-fritz-box-site-to-site-vpn-connetion)
 
-![Fritz!Box import VPN cfg]()
+![Fritz!Box import VPN cfg](https://github.com/www42/aztraining/blob/master/Site-to-Site-VPN/FritzBox%20VPN%20import%20screenshot.png?raw=true)
 
 ```cfg
 vpncfg {
