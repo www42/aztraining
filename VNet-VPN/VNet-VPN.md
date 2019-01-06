@@ -1,4 +1,4 @@
-# Lab: Site-to-Site VPN to Azure
+# Lab: VNet-VPN
 
 ## Lab Scenario
 

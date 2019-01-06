@@ -1,4 +1,4 @@
-# Lab: Static WebApp - Super Simple Deployment
+# Lab: WebApp-Static
 
 ## Lab Scenario
 
