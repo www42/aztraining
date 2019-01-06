@@ -8,21 +8,15 @@ Create a static HTML WebApp. Static HTML code is copied from a GitHub repo. Depl
 az webapp run --name foo --location westeurope
 ```
 
----
-
 ## This Lab ist stolen from
 
 Microsoft docs: [Create a static HTML web app in Azure](https://docs.microsoft.com/en-us/azure/app-service/app-service-web-get-started-html).
-
----
 
 ## Lego Building Blocks
 
 * [Azure App Service - Overview](https://azure.microsoft.com/en-us/resources/videos/azure-app-service-overview/)
 * [Az Cli extensions](https://github.com/Azure/azure-cli/tree/master/doc/extensions)
 * [GitHub repos](https://help.github.com/articles/cloning-a-repository/)
-
----
 
 ## Lab Instructions
 

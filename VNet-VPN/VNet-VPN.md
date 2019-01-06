@@ -4,13 +4,9 @@
 
 ![Scenario](https://github.com/www42/aztraining/blob/master/Site-to-Site-VPN/scenario.png?raw=true)
 
----
-
 ## This Lab ist stolen from
 
 Microsoft docs: [Create a virtual network with a Site-to-Site VPN connection using CLI](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-cli)
-
----
 
 ## Lego building blocks
 
@@ -19,8 +15,6 @@ Microsoft docs: [Create a virtual network with a Site-to-Site VPN connection usi
 * [On Prem VPN Devices](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-devices)
 
 * [Gateway Subnet](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings#gwsub)
-
----
 
 ## Lab Instructions
 

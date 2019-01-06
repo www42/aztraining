@@ -4,19 +4,13 @@
 
 List available Linux VM images from Azure Marketplace. Create VM. Connect to VM via SSH. Install Web server nginx.
 
----
-
 ## This Lab is stolen from
 
 [Quickstart: Create a Linux virtual machine with the Azure CLI](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-cli)
 
----
-
 ## Lego building blocks
 
 * [Azure Marketplace](https://azuremarketplace.microsoft.com/en-us/)
-
----
 
 ## Lab Instructions
 
