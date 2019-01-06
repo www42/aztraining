@@ -1,4 +1,4 @@
-# Lab: VM Windows Server
+# Lab: VM-Windows
 ## Scenario
 ## Lab Instructions
 ### Start Cloud Shell (Bash)
@@ -9,6 +9,7 @@ Location="westeurope"
 RGroup="SinsheimRG"
 VM_Name="Web2"
 VM_AdminName="paul"
+VM_Image="MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest"
 
 ### Create Resource Group
 az group create --name $RGroup --location $Location
@@ -17,24 +18,6 @@ az group list -o table
 
 ### List most popular Marketplace images
 az vm image list -o table
-
-### List Linux Marketplace images
-
-az vm image list-publishers --location $Location -o table
-#  publisher --> Canonical
-
-az vm image list-offers --publisher Canonical --location $Location -o table
-#  offer --> UbuntuServer
-
-az vm image list-skus --publisher Canonical --offer UbuntuServer --location $Location -o table
-#  sku --> 18.04-LTS
-
-az vm image list --publisher Canonical --offer UbuntuServer --sku 18.04-LTS --all --location $Location -o table
-#  version --> latest
-
-MyLinuxImage="Canonical:UbuntuServer:18.04-LTS:latest"
-az vm image show --urn $MyLinuxImage --location $Location
-
 
 ### List Windows Server Marketplace images
 az vm image list-publishers --location $Location --query "[?contains(name,'Microsoft')]" -o table
@@ -52,8 +35,3 @@ az vm image list --publisher MicrosoftWindowsServer --offer WindowsServer --sku 
 VM_Image="MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest"
 az vm image show --urn $VM_Image --location $Location
 
-### No SSH keys available
-ls -l ~/.ssh
-
-### Create Linux VM
-az vm create --name $VM_Name --image $VM_Image --admin-username $VM_AdminName --resource-group $RGroup --generate-ssh-keys
