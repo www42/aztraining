@@ -10,6 +10,7 @@ RGroup="SinsheimRG"
 VM_Name="Web2"
 VM_AdminName="paul"
 VM_Image="MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest"
+VM_Image="MicrosoftWindowsDesktop:WindowsServer:2019-Datacenter:latest"
 
 ### Create Resource Group
 az group create --name $RGroup --location $Location
