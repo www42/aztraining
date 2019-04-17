@@ -78,10 +78,6 @@ az network vnet-gateway create --name $Vng_Name \
 az network vnet-gateway list --resource-group $RGroup -o table
 ```
 
-
-
-
-
 ### Wait for ProvisioningState "Succeeded"
 
 ### Create Certificate for Point-to-Site VPN
@@ -122,6 +118,6 @@ New-SelfSignedCertificate `
 Get-ChildItem Cert:\CurrentUser\My
 ```
 
-### Download VPN Client 
+### Download VPN Client
 
 ### Test the VPN
