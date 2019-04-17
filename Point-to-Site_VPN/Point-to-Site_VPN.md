@@ -82,7 +82,7 @@ az network vnet-gateway list --resource-group $RGroup -o table
 
 ### Create Certificate for Point-to-Site VPN
 
-Switch to PowerShell
+Switch to local (Windows 10) PowerShell
 
 ```Powershell
 $rootCert = New-SelfSignedCertificate `
@@ -100,7 +100,7 @@ $rootCert = New-SelfSignedCertificate `
 [System.Convert]::ToBase64String($rootCert.RawData) | clip
 ```
 
-Paste it into browser "Public certificate data".
+Paste it into browser (Azure Portal) "Public certificate data".
 
 ```Powershell
 New-SelfSignedCertificate `
