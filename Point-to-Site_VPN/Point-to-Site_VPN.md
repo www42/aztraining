@@ -83,3 +83,45 @@ az network vnet-gateway list --resource-group $RGroup -o table
 
 
 ### Wait for ProvisioningState "Succeeded"
+
+### Create Certificate for Point-to-Site VPN
+
+Switch to PowerShell
+
+```Powershell
+$rootCert = New-SelfSignedCertificate `
+              -Type Custom `
+              -KeySpec Signature `
+              -Subject 'CN=AdatumRootCertificate' `
+              -KeyExportPolicy Exportable `
+              -HashAlgorithm sha256 `
+              -KeyLength 2048 `
+              -CertStoreLocation 'Cert:\CurrentUser\My' `
+              -KeyUsageProperty Sign `
+              -KeyUsage CertSign `
+              -FriendlyName 'AdatumRootCertificate'
+
+[System.Convert]::ToBase64String($rootCert.RawData) | clip
+```
+
+Paste it into browser "Public certificate data".
+
+```Powershell
+New-SelfSignedCertificate `
+  -Type Custom `
+  -KeySpec Signature `
+  -Subject 'CN=AdatumClientCertificate' `
+  -KeyExportPolicy Exportable `
+  -HashAlgorithm sha256 `
+  -KeyLength 2048 `
+  -CertStoreLocation 'Cert:\CurrentUser\My' `
+  -Signer $rootCert `
+  -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.2") `
+  -FriendlyName 'AdatumClientCertificate'
+
+Get-ChildItem Cert:\CurrentUser\My
+```
+
+### Download VPN Client 
+
+### Test the VPN
