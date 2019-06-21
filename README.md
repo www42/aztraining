@@ -1,6 +1,6 @@
-# aztraining
+# Azure training labs
 
-Azure training labs.
+## [Docker Host](./Docker-Host/Docker-Host.md)
 
 ## VNet-VPN
 
