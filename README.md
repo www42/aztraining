@@ -4,7 +4,7 @@
 [Create Linux VM in Azure with Docker installed.](Docker-Host/Docker-Host.md)
 
 ## Point-to-Site VPN
-[Connect your Computer to Azure by using Virtual Network Gateway.](Point-to-Site-VPN/Point-to-Site-VPN){:target="_blank"}
+[Connect your Computer to Azure by using Virtual Network Gateway.](Point-to-Site-VPN/Point-to-Site-VPN)
 
 
 (This Lab as an add on to AZ-300T02 Mod3: [Click here](Point-to-Site-VPN/Point-to-Site-VPN-AddonAZ300T02Mod3.md).)
