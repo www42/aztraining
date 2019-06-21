@@ -1,4 +1,4 @@
-# Lab: VNet-VPN
+# Lab: Site-to-Site VPN
 
 ## Lab Scenario
 

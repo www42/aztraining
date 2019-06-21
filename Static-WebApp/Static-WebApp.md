@@ -1,11 +1,11 @@
-# Lab: WebApp-Static
+# Lab: Static WebApp
 
 ## Lab Scenario
 
-Create a static HTML WebApp. Static HTML code is copied from a GitHub repo. Deployment is done super simply by running a two parameter az command:
+Create a static HTML WebApp. Static HTML code is copied from a GitHub repo. Deployment is done by running a two parameter az command:
 
 ```bash
-az webapp run --name foo --location westeurope
+az webapp run --name <name> --location <location>
 ```
 
 ## This Lab ist stolen from
