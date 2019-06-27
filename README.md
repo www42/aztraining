@@ -1,10 +1,10 @@
 # Azure Training Labs
 
 ## Docker Host
-[Create Linux VM in Azure with Docker installed.](Docker-Host/Docker-Host.md){:target="_blank"}
+[Create Linux VM in Azure with Docker installed.](Docker-Host/Docker-Host.md)
 
 ## Point-to-Site VPN
-[Connect your Computer to Azure by using Virtual Network Gateway.](Point-to-Site-VPN/Point-to-Site-VPN)
+[Connect your Computer to Azure by using Virtual Network Gateway.](Point-to-Site-VPN/Point-to-Site-VPN.md)
 
 
 (This Lab as an add on to AZ-300T02 Mod3: [Click here](Point-to-Site-VPN/Point-to-Site-VPN-AddonAZ300T02Mod3.md).)
