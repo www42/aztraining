@@ -4,7 +4,7 @@
 Login to Azure Portal [https://portal.azure.com](https://portal.azure.com). Ask the intructor about login credentials!
 <details>
 
-![Azure Portal](img\Azure_Login.PNG)
+![Azure Portal](img/Azure_Login.PNG)
 </details>
 
 Find the Virtual Gateway *Heidelberg-GW*. Hint: All services!
