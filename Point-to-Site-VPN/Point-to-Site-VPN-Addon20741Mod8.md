@@ -1,12 +1,14 @@
 ## Self signed certificates for Point-to-Site VPN
 
-Ein Name, z.B. Paul
-```powershell
-$Name = "Paul"
+A name, e.g. Paul
+<details>
+ ```powershell
+ $Name = "Paul"
 
 $RootCertName   = $Name + "-RootCertificate"
 $ClientCertName = $Name + "-ClientCertificate"
 ```
+</details>
 
 Generate new Root certificate 
 
