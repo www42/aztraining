@@ -10,13 +10,13 @@ Login to Azure Portal [https://portal.azure.com](https://portal.azure.com). Ask 
 Find the Virtual Gateway *Heidelberg-GW*. Hint: All services!
 <details>
 
-![Azure Portal](img\Virtual-GW.PNG)
+![Azure Portal](img/Virtual-GW.PNG)
 </details>
 
 Locate the Point-to-site configuration
 <details>
 
-![Azure Portal](img\Point-to-site-configuration.PNG)
+![Azure Portal](img/Point-to-site-configuration.PNG)
 </details>
 
 
@@ -91,7 +91,7 @@ Copy Root certificate into clipboard
 Paste it into Azure Portal!
 <details>
 
-![Azure Portal](img\RootCert-AzureGW.png)
+![Azure Portal](img/RootCert-AzureGW.png)
 </details>
 
 
@@ -106,4 +106,4 @@ Run the installer.
 Test the VPN. Good luck!
 <details>
 
-![VPN Client](img\VPN-Client.PNG)
+![VPN Client](img/VPN-Client.PNG)
