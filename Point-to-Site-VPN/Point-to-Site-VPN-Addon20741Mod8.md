@@ -13,12 +13,17 @@ Find the Virtual Gateway *Heidelberg-GW*. Hint: All services!
 ![Azure Portal](img\Virtual-GW.PNG)
 </details>
 
-Locate the Point-To-site configuration
+Locate the Point-to-site configuration
+<details>
 
+![Azure Portal](img\Point-to-site-configuration.PNG)
+</details>
 
 
 
 ## Certificates
+
+Start a local PowerShell.
 
 Think of a name, e.g. *Paul*.
 <details>
@@ -88,3 +93,17 @@ Paste it into Azure Portal!
 
 ![Azure Portal](img\RootCert-AzureGW.png)
 </details>
+
+
+## VPN client
+
+Download VPN client.
+
+Extract VpnClientSetupAmd64.exe from zip file
+
+Run the installer. 
+
+Test the VPN. Good luck!
+<details>
+
+![VPN Client](img\VPN-Client.PNG)
