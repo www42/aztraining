@@ -87,6 +87,8 @@ $rootCert = New-SelfSignedCertificate `
 
 Paste it into browser (Azure Portal) "Public certificate data".
 
+![Azure Portal](img/RootCert-AzureGW.png)
+
 ```Powershell
 New-SelfSignedCertificate `
   -Type Custom `
