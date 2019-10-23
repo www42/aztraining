@@ -36,7 +36,7 @@ az network vnet subnet list --resource-group $RGroup --vnet-name $VNet_Name -o t
 ### Create Public IP (PIP)
 
 ```bash
-Vng_Name="HamburgVNG"
+Vng_Name="BerlinVNG"
 Vng_Pip="$Vng_Name-Pip"
 az network public-ip create --name $Vng_Pip \
                             --resource-group $RGroup \
