@@ -118,6 +118,11 @@ New-SelfSignedCertificate `
 Get-ChildItem Cert:\CurrentUser\My
 ```
 
-### Download VPN Client
+### Install VPN on Windows 10 with admin privileges
+Download VPN Client
+Install Amd64 version
+
+### Install VPN on Windows 10 without admin privileges
+
 
 ### Test the VPN
