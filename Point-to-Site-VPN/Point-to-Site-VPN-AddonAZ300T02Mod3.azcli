@@ -1,0 +1,67 @@
+Hub_Group="az3000401-LabRG"
+Hub_VNet="az3000401-vnet"
+Spoke_Group="az3000402-LabRG"
+Spoke_VNet="az3000402-vnet"
+GatewayName="AdatumGateway"
+GatewayPip="AdatumGateway-Pip"
+GatewaySubnetPrefix="10.0.3.0/27"
+GatewayClientAddressPrefix="192.168.0.0/24"
+Location="westeurope"
+
+# Resource groups are already there
+az group show --name $Hub_Group -o table
+az group show --name $Spoke_Group -o table
+
+# Virtual networks are already there
+az network vnet show --name $Hub_VNet --resource-group $Hub_Group \
+        --query '{name:name,location:location,provisioningState:provisioningState,addressSpace:addressSpace.addressPrefixes[0]}' -o table
+az network vnet show --name $Spoke_VNet --resource-group $Spoke_Group \
+        --query '{name:name,location:location,provisioningState:provisioningState,addressSpace:addressSpace.addressPrefixes[0]}' -o table
+
+# Create gateway subnet
+az network vnet subnet create --name GatewaySubnet \
+                              --address-prefix $GatewaySubnetPrefix \
+                              --vnet-name $Hub_VNet \
+                              --resource-group $Hub_Group
+
+az network vnet subnet list --vnet-name $Hub_VNet --resource-group $Hub_Group -o table
+
+# Create gateway public IP
+az network public-ip create --name $GatewayPip \
+                            --resource-group $Hub_Group \
+                            --allocation-method dynamic \
+                            --location $Location
+
+az network public-ip list -o table --resource-group $Hub_Group
+
+# On hub VNet allow gateway transit
+# see https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-peering-gateway-transit
+
+az network vnet peering show --name az3000401-vnet-to-az3000402-vnet --vnet-name $Hub_VNet --resource-group $Hub_Group \
+    --query '{name:name,peeringState:peeringState,allowGatewayTransit:allowGatewayTransit,useRemoteGateways:useRemoteGateways}' \
+    -o table
+
+az network vnet peering update --name az3000401-vnet-to-az3000402-vnet --vnet-name $Hub_VNet --resource-group $Hub_Group --set allowGatewayTransit=true
+
+# -------------------------------------------------------------------------------
+# Create Gateway
+
+az network vnet-gateway create --name $GatewayName \
+                               --location $Location \
+                               --resource-group $Hub_Group \
+                               --vnet $Hub_VNet \
+                               --address-prefixes $GatewayClientAddressPrefix \
+                               --public-ip-addresses $GatewayPip \
+                               --vpn-type RouteBased \
+                               --sku Basic \
+                               --no-wait
+
+az network vnet-gateway list --resource-group $Hub_Group -o table
+# -------------------------------------------------------------------------------
+
+# On spoke VNet use remote gateways
+az network vnet peering show --name az3000402-vnet-to-az3000401-vnet --vnet-name $Spoke_VNet --resource-group $Spoke_Group \
+    --query '{name:name,peeringState:peeringState,allowGatewayTransit:allowGatewayTransit,useRemoteGateways:useRemoteGateways}' \
+    -o table
+
+az network vnet peering update --name az3000402-vnet-to-az3000401-vnet --vnet-name $Spoke_VNet --resource-group $Spoke_Group --set useRemoteGateways=true
