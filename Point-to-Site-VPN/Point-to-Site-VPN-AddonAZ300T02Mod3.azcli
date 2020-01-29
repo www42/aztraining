@@ -56,7 +56,9 @@ az network vnet-gateway create --name $GatewayName \
                                --sku Basic \
                                --no-wait
 
-az network vnet-gateway list --resource-group $Hub_Group -o table
+az network vnet-gateway list --resource-group $Hub_Group \
+    --query '[].{name:name,provisioningState:provisioningState,resourceGroup:resourceGroup,location:location,vpnType:vpnType}' \
+    -o table
 # -------------------------------------------------------------------------------
 
 # On spoke VNet use remote gateways
