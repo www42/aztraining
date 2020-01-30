@@ -1,3 +1,13 @@
+#  0. Verify hub and spoke
+#  1. Create gateway subnet
+#  2. Create gateway public ip
+#  3. Create gateway
+#  4. Allow gateway transit on hub
+#  5. Use remote gateway on spoke
+#  
+# For VNet gateway transit see
+# https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-peering-gateway-transit
+
 Hub_Group="az3000401-LabRG"
 Hub_VNet="az3000401-vnet"
 Spoke_Group="az3000402-LabRG"
@@ -8,17 +18,13 @@ GatewaySubnetPrefix="10.0.3.0/27"
 GatewayClientAddressPrefix="192.168.0.0/24"
 Location="westeurope"
 
-# Resource groups are already there
-az group show --name $Hub_Group -o table
-az group show --name $Spoke_Group -o table
-
-# Virtual networks are already there
+#  0. Verify hub and spoke
 az network vnet show --name $Hub_VNet --resource-group $Hub_Group \
         --query '{name:name,location:location,provisioningState:provisioningState,addressSpace:addressSpace.addressPrefixes[0]}' -o table
 az network vnet show --name $Spoke_VNet --resource-group $Spoke_Group \
         --query '{name:name,location:location,provisioningState:provisioningState,addressSpace:addressSpace.addressPrefixes[0]}' -o table
 
-# Create gateway subnet
+#  1. Create gateway subnet
 az network vnet subnet create --name GatewaySubnet \
                               --address-prefix $GatewaySubnetPrefix \
                               --vnet-name $Hub_VNet \
@@ -26,7 +32,7 @@ az network vnet subnet create --name GatewaySubnet \
 
 az network vnet subnet list --vnet-name $Hub_VNet --resource-group $Hub_Group -o table
 
-# Create gateway public IP
+#  2. Create gateway public ip
 az network public-ip create --name $GatewayPip \
                             --resource-group $Hub_Group \
                             --allocation-method dynamic \
@@ -34,18 +40,7 @@ az network public-ip create --name $GatewayPip \
 
 az network public-ip list -o table --resource-group $Hub_Group
 
-# On hub VNet allow gateway transit
-# see https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-peering-gateway-transit
-
-az network vnet peering show --name az3000401-vnet-to-az3000402-vnet --vnet-name $Hub_VNet --resource-group $Hub_Group \
-    --query '{name:name,peeringState:peeringState,allowGatewayTransit:allowGatewayTransit,useRemoteGateways:useRemoteGateways}' \
-    -o table
-
-az network vnet peering update --name az3000401-vnet-to-az3000402-vnet --vnet-name $Hub_VNet --resource-group $Hub_Group --set allowGatewayTransit=true
-
-# -------------------------------------------------------------------------------
-# Create Gateway
-
+#  3. Create gateway
 az network vnet-gateway create --name $GatewayName \
                                --location $Location \
                                --resource-group $Hub_Group \
@@ -59,11 +54,17 @@ az network vnet-gateway create --name $GatewayName \
 az network vnet-gateway list --resource-group $Hub_Group \
     --query '[].{name:name,provisioningState:provisioningState,resourceGroup:resourceGroup,location:location,vpnType:vpnType}' \
     -o table
-# -------------------------------------------------------------------------------
 
-# On spoke VNet use remote gateways
-az network vnet peering show --name az3000402-vnet-to-az3000401-vnet --vnet-name $Spoke_VNet --resource-group $Spoke_Group \
+#  4. Allow gateway transit on hub
+az network vnet peering update --name az3000401-vnet-to-az3000402-vnet --vnet-name $Hub_VNet --resource-group $Hub_Group --set allowGatewayTransit=true
+
+az network vnet peering show --name az3000401-vnet-to-az3000402-vnet --vnet-name $Hub_VNet --resource-group $Hub_Group \
     --query '{name:name,peeringState:peeringState,allowGatewayTransit:allowGatewayTransit,useRemoteGateways:useRemoteGateways}' \
     -o table
 
+#  5. Use remote gateway on spoke
 az network vnet peering update --name az3000402-vnet-to-az3000401-vnet --vnet-name $Spoke_VNet --resource-group $Spoke_Group --set useRemoteGateways=true
+
+az network vnet peering show --name az3000402-vnet-to-az3000401-vnet --vnet-name $Spoke_VNet --resource-group $Spoke_Group \
+    --query '{name:name,peeringState:peeringState,allowGatewayTransit:allowGatewayTransit,useRemoteGateways:useRemoteGateways}' \
+    -o table
