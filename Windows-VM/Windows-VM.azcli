@@ -1,24 +1,24 @@
-# Lab: VM-Windows
-## Scenario
-## Lab Instructions
-### Start Cloud Shell (Bash)
-az account list -o table
+# Lab: Windows-VM
+# ---------------
+
+# Lab Instructions
+# ----------------
+
+# Start Cloud Shell (Bash)
+az login
+az account list --all -o table
 
 ### Set Variables
 Location="westeurope"
-RGroup="SinsheimRG"
-VM_Name="Web2"
-VM_AdminName="paul"
-VM_Image="MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest"
-VM_Image="MicrosoftWindowsDesktop:WindowsServer:2019-Datacenter:latest"
+RGroup="Windows-RG"
 
 ### Create Resource Group
 az group create --name $RGroup --location $Location
-
 az group list -o table
 
 ### List most popular Marketplace images
 az vm image list -o table
+
 
 ### List Windows Server Marketplace images
 az vm image list-publishers --location $Location --query "[?contains(name,'Microsoft')]" -o table
@@ -35,4 +35,3 @@ az vm image list --publisher MicrosoftWindowsServer --offer WindowsServer --sku 
 
 VM_Image="MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest"
 az vm image show --urn $VM_Image --location $Location
-

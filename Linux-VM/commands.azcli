@@ -1,5 +1,12 @@
-# Lab: VM-Linux
-## Scenario
+# Lab: Linux-VM
+# -------------
+
+# Scenario
+# List available Linux VM images from Azure Marketplace. Create VM. Connect to VM via SSH. Install Web server nginx.
+
+# This Lab is stolen from
+# https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-cli
+
 ## Lego Building Blocks
 
 * [Linux VM images in Azure Marketplace](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage)
