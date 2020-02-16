@@ -54,24 +54,6 @@ New-AzBastion -Name "VNet1-Bastion" `
 # Error reference id   subnet?
 # Krrrr....
 
-# Test mit Beispiel from docs:
-# https://docs.microsoft.com/en-us/powershell/module/az.network/new-azbastion
-
-# Example 1
-#     bei pip Dynamic --> Static
-$resourceGroup = New-AzResourceGroup -Name "BastionPowershellTest" -Location "westeurope"
-$subnetName = "AzureBastionSubnet"
-$subnet = New-AzVirtualNetworkSubnetConfig -Name $subnetName -AddressPrefix 10.0.0.0/24
-$vnet = New-AzVirtualNetwork -Name "TestVnet" -ResourceGroupName "BastionPowershellTest" -Location "westeurope" -AddressPrefix 10.0.0.0/16 -Subnet $subnet
-$publicip = New-AzPublicIpAddress -ResourceGroupName "BastionPowershellTest" -name "Test-Ip" -location "westeurope" -AllocationMethod Static -Sku Standard
-$bastion = New-AzBastion -ResourceGroupName "BastionPowershellTest" -Name "test-Bastion2" -PublicIpAddress $publicip -VirtualNetwork $vnet
-
-
-
-
-
-
-
 
 
 # ------------------------------
