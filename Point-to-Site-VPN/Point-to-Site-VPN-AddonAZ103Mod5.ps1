@@ -55,7 +55,6 @@ New-AzBastion -Name "VNet1-Bastion" `
 # Krrrr....
 
 
-
 # ------------------------------
 Hub_Group="az3000401-LabRG"
 Hub_VNet="az3000401-vnet"
