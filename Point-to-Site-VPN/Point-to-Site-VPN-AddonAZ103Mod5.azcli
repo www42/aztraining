@@ -24,9 +24,8 @@ RouteTableName="az1000402-rt1"
 #      3 Create gateway
 #      4 Configure "Allow gateway transit" on hub
 #      5 Configure "Use remote gateway" on spoke
+#      6 Configure "Virtual network gateway route propagation"
 #  
-# For VNet gateway transit see
-# https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-peering-gateway-transit
 
 
 # Task 0 Verify hub and spoke
@@ -67,11 +66,13 @@ az network vnet-gateway list --resource-group $Hub_Group \
     -o table
 
 # Task 4 Configure "Allow gateway transit" on hub
+# https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-peering-gateway-transit
 az network vnet peering update --name $Peering_1to2_Name --vnet-name $Hub_VNet --resource-group $Hub_Group --set allowGatewayTransit=true
 
 az network vnet peering show --name $Peering_1to2_Name --vnet-name $Hub_VNet --resource-group $Hub_Group \
     --query '{name:name,peeringState:peeringState,allowGatewayTransit:allowGatewayTransit,useRemoteGateways:useRemoteGateways}' \
     -o table
+
 
 # Task 5 Configure "Use remote gateway" on spoke
 az network vnet peering update --name $Peering_2to1_Name --vnet-name $Spoke_VNet --resource-group $Spoke_Group --set useRemoteGateways=true
@@ -81,9 +82,9 @@ az network vnet peering show --name $Peering_2to1_Name --vnet-name $Spoke_VNet -
     -o table
 
 
-
 # Task 6 Configure "Virtual network gateway route propagation"
 # Warum? Damit man von von VM3 aus Windows anpingen kann (ping 192.168.0.2)
+# https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview#custom-routes
 az network route-table update \
     --name $RouteTableName \
     --resource-group $Spoke_Group \
@@ -114,4 +115,3 @@ az network route-table show --name $RouteTableName --resource-group $Spoke_Group
 
 # Task 4 Test VPN connection
 #    --> Windows
-
