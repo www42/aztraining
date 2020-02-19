@@ -53,15 +53,3 @@ New-AzBastion -Name "VNet1-Bastion" `
               -PublicIpAddress $Pip1
 # Error reference id   subnet?
 # Krrrr....
-
-
-# ------------------------------
-Hub_Group="az3000401-LabRG"
-Hub_VNet="az3000401-vnet"
-Spoke_Group="az3000402-LabRG"
-Spoke_VNet="az3000402-vnet"
-GatewayName="AdatumGateway"
-GatewayPip="AdatumGateway-Pip"
-GatewaySubnetPrefix="10.0.3.0/27"
-GatewayClientAddressPrefix="192.168.0.0/24"
-Location="westeurope"
