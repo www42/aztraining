@@ -14,6 +14,16 @@ Location="westeurope"
 Peering_1to2_Name="az3000401-vnet-to-az3000402-vnet"
 Peering_2to1_Name="az3000402-vnet-to-az3000401-vnet"
 RouteTableName="az3000402-rt1"
+Vm1="az3000401-vm1"
+Vm2="az3000401-vm2"
+Vm3="az3000402-vm1"
+Vm1NicName="az3000401-nic1"
+Vm2NicName="az3000401-nic2"
+Vm3NicName="az3000402-nic1"
+Vm1Pip="az3000401-pip1"
+Vm2Pip="az3000401-pip2"
+Vm3Pip="az3000402-pip1"
+
 
 # Exercise 1 Create Virtual Gateway in the Hub VNet
 # =================================================
@@ -103,6 +113,7 @@ az network route-table show --name $RouteTableName --resource-group $Spoke_Group
 #      2 Copy root certificate to gateway configuration
 #      3 Download and install VPN Client (Windows)
 #      4 Test VPN connection
+#      5 Remove public IP addresses
 
 # Task 1 Create root and client certificates
 #    --> PowerShell
@@ -115,3 +126,17 @@ az network route-table show --name $RouteTableName --resource-group $Spoke_Group
 
 # Task 4 Test VPN connection
 #    --> Windows
+
+# Task 5 Dissociate public IP addresses
+az vm list-ip-addresses -o table
+
+az network nic ip-config update --remove PublicIpAddress \
+ --name ipconfig1 --nic-name $Vm1NicName --resource-group $Hub_Group
+
+az network nic ip-config update --remove PublicIpAddress \
+ --name ipconfig1 --nic-name $Vm2NicName --resource-group $Hub_Group
+
+az network nic ip-config update --remove PublicIpAddress \
+ --name ipconfig1 --nic-name $Vm3NicName --resource-group $Spoke_Group
+
+az vm list-ip-addresses -o table
