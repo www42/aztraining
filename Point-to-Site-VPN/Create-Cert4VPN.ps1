@@ -31,3 +31,9 @@ New-SelfSignedCertificate `
   -FriendlyName 'AdatumClientCertificate'
 
 Get-ChildItem Cert:\CurrentUser\My
+
+# Cleanup - to do
+Remove-Item Cert:\CurrentUser\my\A90B8A57C2A61AB3591E0860C65637199166FE81
+Remove-Item Cert:\CurrentUser\my\90C7E3425208073D2725AD984695883435942571
+
+# VPN entfernen und deinstallieren
