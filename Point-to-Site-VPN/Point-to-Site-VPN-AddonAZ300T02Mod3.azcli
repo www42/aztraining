@@ -1,4 +1,5 @@
-# Lab: Point-to-Site VPN (Addon to AZ-300T02 Mod 03 Lab
+# Lab: Point-to-Site VPN 
+#      (Addon to AZ-300T02 Mod 03 Lab)
 # ------------------------------------------------------
 
 ## Lab Instructions
@@ -29,6 +30,9 @@ Vm3NicName="az3000402-nic1"
 Vm1Pip="az3000401-pip1"
 Vm2Pip="az3000401-pip2"
 Vm3Pip="az3000402-pip1"
+
+
+
 
 
 # Exercise 1 Create Virtual Gateway in the Hub VNet
@@ -112,17 +116,17 @@ az network route-table show --name $RouteTableName --resource-group $Spoke_Group
 
 
 
-# Exercise 2 Create Point-to-Site Connection
-# ==========================================
+## Exercise 2: Create Point-to-Site Connection
+# =============================================
 # Tasks
-#      1 Create root and client certificates
-#      2 Copy root certificate to gateway configuration
-#      3 Download and install VPN Client (Windows)
-#      4 Test VPN connection
-#      5 Remove public IP addresses
+#      1. Create root and client certificates
+#      2. Copy root certificate to gateway configuration
+#      3. Download and install VPN Client (Windows)
+#      4. Test VPN connection
+#      5. Remove public IP addresses
 
-# Task 1 Create root and client certificates
-#    --> PowerShell
+### Task 1. Create root and client certificates
+#   On Windows 10 open PowerShell. Create a root certificate
 $rootCert = New-SelfSignedCertificate `
               -Type Custom `
               -KeySpec Signature `
@@ -135,41 +139,50 @@ $rootCert = New-SelfSignedCertificate `
               -KeyUsage CertSign `
               -FriendlyName 'AdatumRootCertificate'
 
+# Copy root Certificate (public part) into clipboard
 [System.Convert]::ToBase64String($rootCert.RawData) | clip
 
-New-SelfSignedCertificate `
-  -Type Custom `
-  -KeySpec Signature `
-  -Subject 'CN=AdatumClientCertificate' `
-  -KeyExportPolicy Exportable `
-  -HashAlgorithm sha256 `
-  -KeyLength 2048 `
-  -CertStoreLocation 'Cert:\CurrentUser\My' `
-  -Signer $rootCert `
-  -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.2") `
-  -FriendlyName 'AdatumClientCertificate'
+# Create client certificate signed by the root certificate
+$clientCert = New-SelfSignedCertificate `
+                -Type Custom `
+                -KeySpec Signature `
+                -Subject 'CN=AdatumClientCertificate' `
+                -KeyExportPolicy Exportable `
+                -HashAlgorithm sha256 `
+                -KeyLength 2048 `
+                -CertStoreLocation 'Cert:\CurrentUser\My' `
+                -Signer $rootCert `
+                -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.2") `
+                -FriendlyName 'AdatumClientCertificate'
 
+# List certificates. Keep PowerShell open.
 Get-ChildItem Cert:\CurrentUser\My
 
-# Task 2 Copy root certificate to gateway configuration
+### Task 2. Copy root certificate to gateway configuration
 #    paste clipboard into browser "Public certificate data"
 
-# Task 3 Download and install VPN Client (Windows)
-#    --> Portal
+### Task 3. Download and install VPN Client (Windows 10)
+#   Portal download
+#   Windows 10 connect
 
-# Task 4 Test VPN connection
-#    --> Windows
+### Task 4. Test VPN connection
+#    Windows 10 PowerShell
+Get-NetIPConfiguration | where InterfaceAlias -eq az3000401-vnet
+Test-NetConnection 10.0.0.4 -Traceroute
+Test-NetConnection 10.0.1.4 -Traceroute
+Test-NetConnection 10.0.4.4 -Traceroute
 
-# Task 5 Dissociate public IP addresses
+### Task 5. Dissociate public IP addresses
+#   Public IP addresses of VMs are not needed any more.
 az vm list-ip-addresses -o table
 
 az network nic ip-config update --remove PublicIpAddress \
- --name ipconfig1 --nic-name $Vm1NicName --resource-group $Hub_Group
+   --name ipconfig1 --nic-name $Vm1NicName --resource-group $Hub_Group
 
 az network nic ip-config update --remove PublicIpAddress \
- --name ipconfig1 --nic-name $Vm2NicName --resource-group $Hub_Group
+   --name ipconfig1 --nic-name $Vm2NicName --resource-group $Hub_Group
 
 az network nic ip-config update --remove PublicIpAddress \
- --name ipconfig1 --nic-name $Vm3NicName --resource-group $Spoke_Group
+   --name ipconfig1 --nic-name $Vm3NicName --resource-group $Spoke_Group
 
 az vm list-ip-addresses -o table

@@ -1,4 +1,5 @@
-# Lab: Point-to-Site VPN (Addon to AZ-300T02 Mod 03 Lab
+# Lab: Point-to-Site VPN 
+# (Addon to AZ-300T02 Mod 03 Lab)
 
 ## Lab Instructions
 
@@ -44,6 +45,7 @@ Tasks
 4. Configure *Allow gateway transit* on hub
 5. Configure *Use remote gateway* on spoke
 6. Configure *Virtual network gateway route propagation*
+
 
 ### Task 0. Verify hub and spoke
 ```bash
@@ -127,18 +129,18 @@ az network route-table show --name $RouteTableName --resource-group $Spoke_Group
 ```
 
 
+## Exercise 2: Create Point-to-Site Connection
+Tasks
 
+1. Create root and client certificates
+2. Copy root certificate to gateway configuration
+3. Download and install VPN Client (Windows)
+4. Test VPN connection
+5. Remove public IP addresses
+
+### Task 1. Create root and client certificates
+On Windows 10 open PowerShell. Create a root certificate
 ```bash
-
-```
-
-### Wait for ProvisioningState "Succeeded"
-
-### Create Certificate for Point-to-Site VPN
-
-Switch to local (Windows 10) PowerShell
-
-```Powershell
 $rootCert = New-SelfSignedCertificate `
               -Type Custom `
               -KeySpec Signature `
@@ -150,34 +152,68 @@ $rootCert = New-SelfSignedCertificate `
               -KeyUsageProperty Sign `
               -KeyUsage CertSign `
               -FriendlyName 'AdatumRootCertificate'
+```
 
+Copy root certificate (public part) into clipboard
+```bash
 [System.Convert]::ToBase64String($rootCert.RawData) | clip
 ```
 
-Paste it into browser (Azure Portal) "Public certificate data".
+Create client certificate signed by the root certificate
+```bash
+$clientCert = New-SelfSignedCertificate `
+                -Type Custom `
+                -KeySpec Signature `
+                -Subject 'CN=AdatumClientCertificate' `
+                -KeyExportPolicy Exportable `
+                -HashAlgorithm sha256 `
+                -KeyLength 2048 `
+                -CertStoreLocation 'Cert:\CurrentUser\My' `
+                -Signer $rootCert `
+                -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.2") `
+                -FriendlyName 'AdatumClientCertificate'
+```
 
-![Azure Portal](img/RootCert-AzureGW.png)
-
-```Powershell
-New-SelfSignedCertificate `
-  -Type Custom `
-  -KeySpec Signature `
-  -Subject 'CN=AdatumClientCertificate' `
-  -KeyExportPolicy Exportable `
-  -HashAlgorithm sha256 `
-  -KeyLength 2048 `
-  -CertStoreLocation 'Cert:\CurrentUser\My' `
-  -Signer $rootCert `
-  -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.2") `
-  -FriendlyName 'AdatumClientCertificate'
-
+List certificates. Keep PowerShell open.
+```bash
 Get-ChildItem Cert:\CurrentUser\My
 ```
 
-### Download VPN Client
+### Task 2. Copy root certificate to gateway configuration
+Paste clipboard into browser (Azure Portal) "Public certificate data"
 
-### Test the VPN
+![Azure Portal](img/RootCert-AzureGW.png)
+
+
+### Task 3. Download and install VPN Client (Windows 10)
+Portal download
+
+Windows 10
+![Azure Portal](img/VPN-Client.PNG)
+
+### Task 4. Test VPN connection
+Windows 10 PowerShell
+```bash
 Get-NetIPConfiguration | where InterfaceAlias -eq az3000401-vnet
 Test-NetConnection 10.0.0.4 -Traceroute
 Test-NetConnection 10.0.1.4 -Traceroute
 Test-NetConnection 10.0.4.4 -Traceroute
+```
+
+### Task 5. Dissociate public IP addresses
+
+Public IP addresses of VMs are not needed any more.
+```bash
+az vm list-ip-addresses -o table
+
+az network nic ip-config update --remove PublicIpAddress \
+   --name ipconfig1 --nic-name $Vm1NicName --resource-group $Hub_Group
+
+az network nic ip-config update --remove PublicIpAddress \
+   --name ipconfig1 --nic-name $Vm2NicName --resource-group $Hub_Group
+
+az network nic ip-config update --remove PublicIpAddress \
+   --name ipconfig1 --nic-name $Vm3NicName --resource-group $Spoke_Group
+
+az vm list-ip-addresses -o table
+```
