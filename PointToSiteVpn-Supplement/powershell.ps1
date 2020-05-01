@@ -12,7 +12,7 @@ $SpokePeeringToHub="az3000402-vnet-to-az3000401-vnet"
 $GatewayName="AdatumGateway"
 $GatewayPip="AdatumGateway-Pip"
 $GatewaySubnetPrefix="10.0.3.0/27"
-$GatewayAddressPrefix="192.168.0.0/24"
+$GatewayAddressPool="192.168.0.0/24"
 
 $RouteTable="az3000402-rt1"
 
@@ -42,7 +42,7 @@ $Vm3Nic="az3000402-nic1"
 #   $GatewayName="AdatumGateway"
 #   $GatewayPip="AdatumGateway-Pip"
 #   $GatewaySubnetPrefix="10.104.3.0/27"
-#   $GatewayAddressPrefix="192.168.0.0/24"
+#   $GatewayAddressPool="192.168.0.0/24"
 #   
 #   $RouteTable="az1000402-rt1"
 #   
@@ -118,7 +118,7 @@ az network public-ip list `
 az network vnet-gateway create `
     --name $GatewayName --vnet $HubVnet `
     --resource-group $HubRg --location $Location `
-    --address-prefixes $GatewayAddressPrefix `
+    --address-prefixes $GatewayAddressPool `
     --public-ip-addresses $GatewayPip `
     --vpn-type RouteBased --sku Basic `
     --no-wait
