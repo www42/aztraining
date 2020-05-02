@@ -9,6 +9,10 @@ $SpokeRg="az3000402-LabRG"
 $SpokeVnet="az3000402-vnet"
 $SpokePeeringToHub="az3000402-vnet-to-az3000401-vnet"
 
+$Vm1="az3000401-vm1"
+$Vm2="az3000401-vm2"
+$Vm3="az3000402-vm1"
+
 $GatewayName="AdatumGateway"
 $GatewayPip="AdatumGateway-Pip"
 $GatewaySubnetPrefix="10.0.3.0/27"
@@ -16,15 +20,11 @@ $GatewayAddressPool="192.168.0.0/24"
 
 $RouteTable="az3000402-rt1"
 
-$Vm1="az3000401-vm1"
-$Vm2="az3000401-vm2"
-$Vm3="az3000402-vm1"
+$RootCertificateName="AdatumRootCertificate"
+$ClientCertificateName="AdatumClientCertificate"
 
-az vm nic list --vm-name $Vm1 --resource-group $HubRg --query "[0].id" --output tsv
+$PcProcessorArchitecture="Amd64"
 
-$Vm1Nic="az3000401-nic1"
-$Vm2Nic="az3000401-nic2"
-$Vm3Nic="az3000402-nic1"
 
 
 
@@ -140,7 +140,6 @@ az network vnet peering show `
     --output table
 
 
-# ---------------- hier --------------------------------------------
 ### Task 5: Configure *Use remote gateway* on spoke
 az network vnet peering update `
     --name $SpokePeeringToHub --vnet-name $SpokeVnet --resource-group $SpokeRg `
@@ -163,54 +162,105 @@ az network route-table show `
     --output table
 
 ### Task 7: Create root and client certificates
-$rootCert = New-SelfSignedCertificate `
-              -Type Custom `
-              -KeySpec Signature `
-              -Subject 'CN=AdatumRootCertificate' `
-              -KeyExportPolicy Exportable `
-              -HashAlgorithm sha256 `
-              -KeyLength 2048 `
-              -CertStoreLocation 'Cert:\CurrentUser\My' `
-              -KeyUsageProperty Sign `
-              -KeyUsage CertSign `
-              -FriendlyName 'AdatumRootCertificate'
+$RootCertificate = New-SelfSignedCertificate `
+        -FriendlyName $RootCertificateName `
+        -Subject "CN=$RootCertificateName" `
+        -Type Custom `
+        -KeySpec Signature `
+        -KeyExportPolicy Exportable `
+        -HashAlgorithm sha256 `
+        -KeyLength 2048 `
+        -KeyUsageProperty Sign `
+        -KeyUsage CertSign `
+        -CertStoreLocation 'Cert:\CurrentUser\My'
 
-$clientCert = New-SelfSignedCertificate `
-              -Type Custom `
-              -KeySpec Signature `
-              -Subject 'CN=AdatumClientCertificate' `
-              -KeyExportPolicy Exportable `
-              -HashAlgorithm sha256 `
-              -KeyLength 2048 `
-              -CertStoreLocation 'Cert:\CurrentUser\My' `
-              -Signer $rootCert `
-              -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.2") `
-              -FriendlyName 'AdatumClientCertificate'
-              
+$ClientCertificate = New-SelfSignedCertificate `
+        -FriendlyName $ClientCertificateName `
+        -Subject "CN=$ClientCertificateName" `
+        -Type Custom `
+        -KeySpec Signature `
+        -KeyExportPolicy Exportable `
+        -HashAlgorithm sha256 `
+        -KeyLength 2048 `
+        -Signer $RootCertificate `
+        -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.2") `
+        -CertStoreLocation 'Cert:\CurrentUser\My'
+
+Get-ChildItem Cert:\CurrentUser\My | 
+    where {$_.Subject -eq "CN=$RootCertificateName" -or $_.Subject -eq "CN=$ClientCertificateName"} | 
+    ft Subject, Issuer, Thumbprint
+
+
 ### Task 8: Copy root certificate to gateway configuration
-[System.Convert]::ToBase64String($rootCert.RawData) | clip
+$RootCertPublicData=[System.Convert]::ToBase64String($RootCertificate.RawData)
+
+az network vnet-gateway root-cert create `
+    --name $RootCertificateName `
+    --public-cert-data $RootCertPublicData `
+    --gateway-name $GatewayName  --resource-group $HubRg
+
               
 
 
 
 ## Exercise 4: Add VPN to PC and Test
 ### Task 1: Download and install VPN client on PC
+$Uri=az network vnet-gateway vpn-client generate `
+    --processor-architecture $PcProcessorArchitecture `
+    --name $GatewayName --resource-group $HubRg `
+    --output tsv
+
+$VpnZipPath="$env:HOMEPATH\Downloads"
+Invoke-RestMethod -Uri $Uri -OutFile $VpnZipPath\VpnClient.zip
+Expand-Archive -Path $VpnZipPath\VpnClient.zip -DestinationPath $VpnZipPath\VpnClient
+& $VpnZipPath\VpnClient\WindowsAmd64\VpnClientSetupAmd64.exe
+& cmd.exe /C "start ms-settings:network-vpn"
+
+
 ### Task 2: Test VPN connection
-Get-NetIPConfiguration | where InterfaceAlias -eq az3000401-vnet
+Get-NetIPConfiguration | where InterfaceAlias -eq $HubVnet
 Test-NetConnection 10.0.0.4 -Traceroute
 Test-NetConnection 10.0.1.4 -Traceroute
 Test-NetConnection 10.0.4.4 -Traceroute
 
 ### Task 3. Dissociate public IP addresses
-az vm list-ip-addresses -o table
+# VM --> NIC Id
+$Vm1NicId=az vm nic list --vm-name $Vm1 --resource-group $HubRg --query "[0].id" --output tsv
+$Vm2NicId=az vm nic list --vm-name $Vm2 --resource-group $HubRg --query "[0].id" --output tsv
+$Vm3NicId=az vm nic list --vm-name $Vm3 --resource-group $SpokeRg --query "[0].id" --output tsv
 
-az network nic ip-config update --remove PublicIpAddress \
-   --name ipconfig1 --nic-name $Vm1Nic --resource-group $HubRg
+# NIC Id --> IpConfig Id
+$Vm1IpconfigId=az network nic show --ids $Vm1NicId --query "ipConfigurations[0].id" --output tsv
+$Vm2IpconfigId=az network nic show --ids $Vm2NicId --query "ipConfigurations[0].id" --output tsv
+$Vm3IpconfigId=az network nic show --ids $Vm3NicId --query "ipConfigurations[0].id" --output tsv
 
-az network nic ip-config update --remove PublicIpAddress \
-   --name ipconfig1 --nic-name $Vm2Nic --resource-group $HubRg
+# IpConfig Id --> PublicIp Id
+$Vm1PublicIpId=az network nic ip-config show --ids $Vm1IpconfigId --query "publicIpAddress.id" --output tsv
+$Vm2PublicIpId=az network nic ip-config show --ids $Vm2IpconfigId --query "publicIpAddress.id" --output tsv
+$Vm3PublicIpId=az network nic ip-config show --ids $Vm3IpconfigId --query "publicIpAddress.id" --output tsv
 
-az network nic ip-config update --remove PublicIpAddress \
-   --name ipconfig1 --nic-name $Vm3Nic --resource-group $SpokeRg
+# Ipconfig ändern (public IP dissoziieren)
+az network nic ip-config update --ids $Vm1IpconfigId --remove publicIpAddress
+az network nic ip-config update --ids $Vm2IpconfigId --remove publicIpAddress
+az network nic ip-config update --ids $Vm3IpconfigId --remove publicIpAddress
 
-az vm list-ip-addresses -o table
+# Die public IPs sind nicht mehr mit den VMs assoziiert ...
+az vm list-ip-addresses --output table
+
+# ... aber als IP sind sie noch da
+az network public-ip list --output table
+
+# Public IP löschen
+az network public-ip delete --ids $Vm1PublicIpId
+az network public-ip delete --ids $Vm2PublicIpId
+az network public-ip delete --ids $Vm3PublicIpId
+
+
+
+## Exersise 5: Clean up
+### Task 1: Remove Azure resources
+### Task 2: Remove VPN aon PC
+Remove-Item -Path $ClientCertificate.PSPath
+Remove-Item -Path $RootCertificate.PSPath
+Remove-Item -Path $VpnZipPath\VpnClient.zip
+Remove-Item -Path $VpnZipPath\VpnClient -Recurse

@@ -17,7 +17,7 @@ VM1, VM2, VM3
 Gateway, PC
 
 ## Overview
-There are four exercises in this Lab:
+There are five exercises in this Lab:
 
 | | |
 |-|-|
@@ -25,6 +25,7 @@ There are four exercises in this Lab:
 | Exercise 2 | Verify existing infrastructure
 | Exercise 3 | Create virtual gateway
 | Exersise 4 | Add VPN to PC and test
+| Exersise 5 | Clean up
 
 Most tasks are written in Azure CLI. Few tasks in exercise 3 use PowerShell cmdlets. **In principal PowerShell is required as Shell**, either CloudShell or local PowerShell. Azure CLI version 2.5.0 or above is required.
 
@@ -62,3 +63,9 @@ Warum? Damit man von von VM3 aus den PC anpingen kann (ping 192.168.0.2).
 ### Task 2: Test VPN connection
 ### Task 3. Dissociate public IP addresses
 Public IP addresses of VMs are not needed any more.
+
+
+
+## Exersise 5: Clean up
+### Task 1: Remove Azure resources
+### Task 2: Remove VPN aon PC
