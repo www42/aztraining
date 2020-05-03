@@ -36,8 +36,8 @@ Most tasks are written in Azure CLI. Few tasks in exercise 3 use PowerShell cmdl
 
 ## Exercise 2: Verify existing infrastructure
 ### Task 1: Verify hub and spoke virtual networks
-### Task 2: Verify virtual machines
-### Task 3: Verify peering
+### Task 2: Verify peering
+### Task 3: Verify virtual machines
 ### Task 4: Verify custom route
 
 
