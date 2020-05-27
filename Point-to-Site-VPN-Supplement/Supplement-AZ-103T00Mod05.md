@@ -257,7 +257,7 @@ az network vnet-gateway root-cert create `
 ### Task 1: Download and install VPN client on PC
 
 ```powershell
-$Uri=az network vnet-gateway vpn-client generate `
+$Uri = az network vnet-gateway vpn-client generate `
     --processor-architecture Amd64 `
     --name $GatewayName --resource-group $HubRg `
     --output tsv
@@ -268,7 +268,7 @@ Invoke-RestMethod -Uri $Uri -OutFile $VpnZipPath\VpnClient.zip
 
 Expand-Archive -Path $VpnZipPath\VpnClient.zip -DestinationPath $VpnZipPath\VpnClient
 
-$VpnZipPath\VpnClient\WindowsAmd64\VpnClientSetupAmd64.exe
+&"$VpnZipPath\VpnClient\WindowsAmd64\VpnClientSetupAmd64.exe"
 
 cmd.exe /C "start ms-settings:network-vpn"
 ```
@@ -279,7 +279,7 @@ cmd.exe /C "start ms-settings:network-vpn"
 Get-NetIPConfiguration | where InterfaceAlias -eq $HubVnet
 Test-NetConnection 10.104.0.4 -Traceroute
 Test-NetConnection 10.104.1.4 -Traceroute
-Test-NetConnection 10.104.4.4 -Traceroute
+Test-NetConnection 10.204.0.4 -Traceroute
 ```
 
 ### Task 3. Dissociate public IP addresses
@@ -338,6 +338,6 @@ az group delete --name $SpokeRg --yes --no-wait
 cmd.exe /C "start ms-settings:network-vpn"
 Remove-Item -Path $ClientCertificate.PSPath
 Remove-Item -Path $RootCertificate.PSPath
-Remove-Item -Path $VpnZipPath\VpnClient.zip
-Remove-Item -Path $VpnZipPath\VpnClient -Recurse
+Remove-Item -Path "$VpnZipPath\VpnClient.zip"
+Remove-Item -Path "$VpnZipPath\VpnClient" -Recurse
 ```
