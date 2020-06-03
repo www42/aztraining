@@ -150,12 +150,25 @@ az network public-ip list `
 ### Task 3: Create gateway
 
 ```powershell
+# neu: Generation2, VpnGw2
 az network vnet-gateway create `
     --name $GatewayName --vnet $HubVnet `
     --resource-group $HubRg --location $Location `
     --address-prefixes $GatewayAddressPool `
     --public-ip-addresses $GatewayPip `
-    --vpn-type RouteBased --sku Basic `
+    --gateway-type Vpn `
+    --vpn-gateway-generation Generation2 `
+    --sku VpnGw2 `
+    --vpn-type RouteBased `
+    --no-wait
+
+az network vnet-gateway create `
+    --name $GatewayName --vnet $HubVnet `
+    --resource-group $HubRg --location $Location `
+    --address-prefixes $GatewayAddressPool `
+    --public-ip-addresses $GatewayPip `
+    --sku Basic `
+    --vpn-type RouteBased 
     --no-wait
 
 az network vnet-gateway list `
