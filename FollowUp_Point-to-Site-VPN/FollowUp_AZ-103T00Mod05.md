@@ -1,8 +1,8 @@
-# Point-to-Site VPN: Supplement to Microsoft Learning Course AZ-300
+# Create additional Point-to-Site VPN
 
-This Lab is a supplement to Microsoft Learning courses [AZ-300T02](https://docs.microsoft.com/en-us/learn/certifications/courses/az-300t02) (Module 3).
+##  Follow Up to Microsoft Learning Course AZ-103 Mod 5 Lab
 
-This Lab adds a Point-to-Site VPN to the network infrastructure build by AZ-300 Module 3's Lab [Configuring VNet peering and service chaining](https://github.com/MicrosoftLearning/AZ-300-MicrosoftAzureArchitectTechnologies/blob/master/Instructions/AZ-300T02_Lab_Mod03_Configuring%20VNet%20peering%20and%20service%20chaining.md).
+This Lab adds a Point-to-Site VPN to the network infrastructure build by AZ-103 Module 5's Lab [Configuring VNet peering and service chaining](https://microsoftlearning.github.io/AZ-103-MicrosoftAzureAdministrator/Instructions/Labs/05%20-%20VNet%20Peering%20and%20Service%20Chaining%20(az-100-04).html).
 
 ## Existing Network Infrastructure
 
@@ -32,22 +32,22 @@ Most tasks are written in Azure CLI. Few tasks in exercise 3 use PowerShell cmdl
 ## Exercise 1: Define variables
 
 ```powershell
-$HubRg="az3000401-LabRG"
-$HubVnet="az3000401-vnet"
+$HubRg = "az1000401-RG"
+$HubVnet = "az1000401-vnet1"
 
-$SpokeRg="az3000402-LabRG"
-$SpokeVnet="az3000402-vnet"
+$SpokeRg = "az1000402-RG"
+$SpokeVnet = "az1000402-vnet2"
 
-$Vm1="az3000401-vm1"
-$Vm2="az3000401-vm2"
-$Vm3="az3000402-vm1"
+$Vm1 = "az1000401-vm1"
+$Vm2 = "az1000401-vm2"
+$Vm3 = "az1000402-vm3"
 
-$GatewayName="AdatumGateway"
-$GatewaySubnetPrefix="10.0.3.0/27"
-$GatewayAddressPool="192.168.0.0/24"
+$GatewayName = "AdatumGateway"
+$GatewaySubnetPrefix = "10.104.3.0/27"
+$GatewayAddressPool = "192.168.0.0/24"
 
-$RootCertificateName="AdatumRootCertificate"
-$ClientCertificateName="AdatumClientCertificate"
+$RootCertificateName = "AdatumRootCertificate"
+$ClientCertificateName = "AdatumClientCertificate"
 ```
 
 
@@ -60,7 +60,7 @@ az network vnet show `
     --query '{name:name,location:location,addressSpace:addressSpace.addressPrefixes[0],provisioningState:provisioningState}' `
     --output table
 
-$Location=az network vnet show `
+$Location = az network vnet show `
     --name $HubVnet --resource-group $HubRg `
     --query "location" `
     --output tsv
@@ -74,7 +74,7 @@ az network vnet show `
 ### Task 2: Verify peering
 
 ```powershell
-$HubPeeringToSpoke=az network vnet show `
+$HubPeeringToSpoke = az network vnet show `
     --name $HubVnet --resource-group $HubRg `
     --query 'virtualNetworkPeerings[0].name' `
     --output tsv
@@ -84,7 +84,7 @@ az network vnet peering show `
     --query '{name:name,peeringState:peeringState, allowGatewayTransit:allowGatewayTransit,useRemoteGateways:useRemoteGateways}' `
     --output table
     
-$SpokePeeringToHub=az network vnet show `
+$SpokePeeringToHub = az network vnet show `
     --name $SpokeVnet --resource-group $SpokeRg `
     --query 'virtualNetworkPeerings[0].name' `
     --output tsv
@@ -112,7 +112,7 @@ az vm list `
 ### Task 4: Verify custom route
 
 ```powershell
-$RouteTable=az network route-table list --resource-group $SpokeRg --query "[].name" --output tsv
+$RouteTable = az network route-table list --resource-group $SpokeRg --query "[].name" --output tsv
 
 az network route-table show `
     --name $RouteTable --resource-group $SpokeRg `
@@ -136,7 +136,7 @@ az network vnet subnet list `
 ### Task 2: Create gateway public ip
 
 ```powershell
-$GatewayPip="$GatewayName-Pip"
+$GatewayPip = "$GatewayName-Pip"
 az network public-ip create `
     --name $GatewayPip --resource-group $HubRg `
     --allocation-method dynamic --location $Location
@@ -150,7 +150,6 @@ az network public-ip list `
 ### Task 3: Create gateway
 
 ```powershell
-# neu: Generation2, VpnGw2
 az network vnet-gateway create `
     --name $GatewayName --vnet $HubVnet `
     --resource-group $HubRg --location $Location `
@@ -160,15 +159,6 @@ az network vnet-gateway create `
     --vpn-gateway-generation Generation2 `
     --sku VpnGw2 `
     --vpn-type RouteBased `
-    --no-wait
-
-az network vnet-gateway create `
-    --name $GatewayName --vnet $HubVnet `
-    --resource-group $HubRg --location $Location `
-    --address-prefixes $GatewayAddressPool `
-    --public-ip-addresses $GatewayPip `
-    --sku Basic `
-    --vpn-type RouteBased 
     --no-wait
 
 az network vnet-gateway list `
@@ -270,7 +260,7 @@ az network vnet-gateway root-cert create `
 ### Task 1: Download and install VPN client on PC
 
 ```powershell
-$Uri=az network vnet-gateway vpn-client generate `
+$Uri = az network vnet-gateway vpn-client generate `
     --processor-architecture Amd64 `
     --name $GatewayName --resource-group $HubRg `
     --output tsv
@@ -281,7 +271,7 @@ Invoke-RestMethod -Uri $Uri -OutFile $VpnZipPath\VpnClient.zip
 
 Expand-Archive -Path $VpnZipPath\VpnClient.zip -DestinationPath $VpnZipPath\VpnClient
 
-$VpnZipPath\VpnClient\WindowsAmd64\VpnClientSetupAmd64.exe
+&"$VpnZipPath\VpnClient\WindowsAmd64\VpnClientSetupAmd64.exe"
 
 cmd.exe /C "start ms-settings:network-vpn"
 ```
@@ -290,9 +280,9 @@ cmd.exe /C "start ms-settings:network-vpn"
 
 ```powershell
 Get-NetIPConfiguration | where InterfaceAlias -eq $HubVnet
-Test-NetConnection 10.0.0.4 -Traceroute
-Test-NetConnection 10.0.1.4 -Traceroute
-Test-NetConnection 10.0.4.4 -Traceroute
+Test-NetConnection 10.104.0.4 -Traceroute
+Test-NetConnection 10.104.1.4 -Traceroute
+Test-NetConnection 10.204.0.4 -Traceroute
 ```
 
 ### Task 3. Dissociate public IP addresses
@@ -300,19 +290,19 @@ Public IP addresses of VMs are not needed any more.
 
 ```powershell
 # VM --> NIC Id
-$Vm1NicId=az vm nic list --vm-name $Vm1 --resource-group $HubRg --query "[0].id" --output tsv
-$Vm2NicId=az vm nic list --vm-name $Vm2 --resource-group $HubRg --query "[0].id" --output tsv
-$Vm3NicId=az vm nic list --vm-name $Vm3 --resource-group $SpokeRg --query "[0].id" --output tsv
+$Vm1NicId = az vm nic list --vm-name $Vm1 --resource-group $HubRg --query "[0].id" --output tsv
+$Vm2NicId = az vm nic list --vm-name $Vm2 --resource-group $HubRg --query "[0].id" --output tsv
+$Vm3NicId = az vm nic list --vm-name $Vm3 --resource-group $SpokeRg --query "[0].id" --output tsv
 
 # NIC Id --> IpConfig Id
-$Vm1IpconfigId=az network nic show --ids $Vm1NicId --query "ipConfigurations[0].id" --output tsv
-$Vm2IpconfigId=az network nic show --ids $Vm2NicId --query "ipConfigurations[0].id" --output tsv
-$Vm3IpconfigId=az network nic show --ids $Vm3NicId --query "ipConfigurations[0].id" --output tsv
+$Vm1IpconfigId = az network nic show --ids $Vm1NicId --query "ipConfigurations[0].id" --output tsv
+$Vm2IpconfigId = az network nic show --ids $Vm2NicId --query "ipConfigurations[0].id" --output tsv
+$Vm3IpconfigId = az network nic show --ids $Vm3NicId --query "ipConfigurations[0].id" --output tsv
 
 # IpConfig Id --> PublicIp Id
-$Vm1PublicIpId=az network nic ip-config show --ids $Vm1IpconfigId --query "publicIpAddress.id" --output tsv
-$Vm2PublicIpId=az network nic ip-config show --ids $Vm2IpconfigId --query "publicIpAddress.id" --output tsv
-$Vm3PublicIpId=az network nic ip-config show --ids $Vm3IpconfigId --query "publicIpAddress.id" --output tsv
+$Vm1PublicIpId = az network nic ip-config show --ids $Vm1IpconfigId --query "publicIpAddress.id" --output tsv
+$Vm2PublicIpId = az network nic ip-config show --ids $Vm2IpconfigId --query "publicIpAddress.id" --output tsv
+$Vm3PublicIpId = az network nic ip-config show --ids $Vm3IpconfigId --query "publicIpAddress.id" --output tsv
 
 # Ipconfig ändern (public IP dissoziieren)
 az network nic ip-config update --ids $Vm1IpconfigId --remove publicIpAddress
@@ -351,6 +341,6 @@ az group delete --name $SpokeRg --yes --no-wait
 cmd.exe /C "start ms-settings:network-vpn"
 Remove-Item -Path $ClientCertificate.PSPath
 Remove-Item -Path $RootCertificate.PSPath
-Remove-Item -Path $VpnZipPath\VpnClient.zip
-Remove-Item -Path $VpnZipPath\VpnClient -Recurse
+Remove-Item -Path "$VpnZipPath\VpnClient.zip"
+Remove-Item -Path "$VpnZipPath\VpnClient" -Recurse
 ```

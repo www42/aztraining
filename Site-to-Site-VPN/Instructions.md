@@ -2,13 +2,11 @@
 
 ## Lab Scenario
 
-![Scenario](scenario.png)
+![Scenario](img/scenario.png)
 
-## This Lab ist stolen from
 
-Microsoft docs: [Create a virtual network with a Site-to-Site VPN connection using CLI](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-cli)
-
-## Lego building blocks
+## Documentation
+* Microsoft Docs: [Create a virtual network with a Site-to-Site VPN connection using CLI](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-cli)
 
 * [Azure VPN Gateway](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpngateways)
 
@@ -156,7 +154,7 @@ az network vpn-connection list --resource-group $RGroup -o table
 
 Bjoern Olausson: [Site-to-Site VPN with Fritz!Box](https://olausson.de/news/9-news/23-azure-fritz-box-site-to-site-vpn-connetion)
 
-![Fritz!Box import VPN cfg](FritzBox%20VPN%20import%20screenshot.png)
+![Fritz!Box import VPN cfg](img/FritzBox_screenshot.png)
 
 ```cfg
 vpncfg {
