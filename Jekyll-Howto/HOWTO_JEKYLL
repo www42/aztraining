@@ -50,9 +50,15 @@ bundle exec jekyll serve
 
 # Create new repo on GitHub, don't initialize with README.md
 
-
 cd ~/git
+# ---------------------
 jekyll new hacker_blog
+# ---------------------
+# Das erzeugt einen Ordner mit einem File Skelett, insbesondere gibt es .gitignore mit Zeile _site (und weiteren Zeilen)
+# d.h. der ganze Ordner _site wir nicht zu GitHub gepushed.
+# (Wozu auch, GitHub macht das `jekyll serve` ja selba) 
+
+
 cd hacker_blog
 git init
 git checkout -b gh-pages
