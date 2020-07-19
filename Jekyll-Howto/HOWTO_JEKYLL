@@ -1,0 +1,65 @@
+# Jekyll local installation
+# --------------------------
+
+# Ryby is the programming language jekyll is written in
+ruby --version
+
+# RubyGems is a packet manager for Ruby (like apt-get for Debian)
+gem --version
+
+# Bundler is for dependency management (RubyGems only handles dependencies of gems itself, not for the hole Ruby application)
+bundle --version
+
+# Jekyll is a Gem
+gem info jekyll
+jekyll --version
+
+# Create new blog
+cd ~/git
+jekyll new hacker_blog
+cd hacker_blog
+
+# use 'bundle exec ...' only for the firt time (to generate the Gemfile). Later simply start with 'jekyll serve' 
+bundle exec jekyll serve
+jekyll serve
+
+# To show posts in _drafts folder
+jekyll serve --draft
+
+# Themes
+# -------------------------
+# Find theme https://rubygems.org/   jekyll-theme-hacker
+
+# Gemfile   additional line
+#       gem "jekyll-theme-hacker"
+
+# Install the theme
+bundle install 
+bundle info jekyll
+bundle info minima
+bundle info jekyll-theme-hacker
+
+# _config.yml  replace
+#       theme: minima
+#       theme: jekyll-theme-hacker
+bundle exec jekyll serve
+
+
+# GitHub Pages
+# ------------------
+
+# Create new repo on GitHub, don't initialize with README.md
+
+
+cd ~/git
+jekyll new hacker_blog
+cd hacker_blog
+git init
+git checkout -b gh-pages
+# _config.yml   baseurl: "hacker_blog"
+git add .
+git commit -m "initial commit"
+git branch -avv
+git status
+git remote add origin  https://github.com/www42/hacker_blog.git
+git push origin gh-pages
