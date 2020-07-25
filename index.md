@@ -8,7 +8,7 @@ lab:
 
 ## Lab scenario
 
-This is a follow up to Microsoft Learning Course [AZ-301T03 Lab Module 2 Exercise 4](https://github.com/MicrosoftLearning/AZ-301-MicrosoftAzureArchitectDesign/blob/master/Instructions/AZ-301T03_Lab_Mod02_Deploying%20Managed%20Containerized%20Workloads%20to%20Azure.md). It is assumed that you completed that lab.
+This is a follow up to Microsoft Learning Course [AZ-301T03 Lab Module 2 Exercise 4](https://github.com/MicrosoftLearning/AZ-301-MicrosoftAzureArchitectDesign/blob/master/Instructions/AZ-301T03_Lab_Mod02_Deploying%20Managed%20Containerized%20Workloads%20to%20Azure.md#exercise-4-implement-devops-with-aks). It is assumed that you completed that lab.
 
 ## Objectives
 
@@ -25,16 +25,6 @@ After you complete this lab, you will be able to:
   - **Estimated Time**: 30 minutes
 
 ## Instructions
-
-### Before you start
-
-#### Setup Task
-
-1. Integer dolor purus, gravida eu sem id, efficitur aliquet neque. 
-
-1. Suspendisse viverra mauris in metus laoreet consectetur. 
-
-1. Sed diam risus, convallis quis condimentum at, egestas malesuada libero. 
 
 ### Exercise 1: 
 
