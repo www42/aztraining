@@ -5,11 +5,10 @@ lab:
 ---
 
 # Lab: Inspect Jenkins Pipeline and Azure Resources
-# Follow Up to Microsoft Learning Course AZ-301T03 Lab Mod 2 Exercise 4
 
 ## Lab scenario
 
-This is a follow up to Microsoft Learning Course AZ-301T03 Lab Module 2 Exercise 4. It is assumed that you completed that lab.
+This is a follow up to Microsoft Learning Course [AZ-301T03 Lab Module 2 Exercise 4](https://github.com/MicrosoftLearning/AZ-301-MicrosoftAzureArchitectDesign/blob/master/Instructions/AZ-301T03_Lab_Mod02_Deploying%20Managed%20Containerized%20Workloads%20to%20Azure.md). It is assumed that you completed that lab.
 
 ## Objectives
 
