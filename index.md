@@ -36,7 +36,7 @@ After you complete this lab, you will
 
 1. In the Azure portal, open the CloudShell pane, start Bash.
 
-1. Get the AppID of the Kubernetes cluster
+1. Get the AppID of the Kubernetes cluster. Replace the `<Azure region>` placeholder with the name of the Azure region you used in the Microsoft Learning Course Exercise.
 
 ```bash
 RESOURCE_GROUP='AADesignLab0403-RG'
@@ -44,6 +44,7 @@ LOCATION='<Azure region>'
 APP_ID=$(az ad sp list --all --query "[?appDisplayName=='AADesignLab0403-SP'].[appId]" --output tsv)
 ```
 
-    > **Note**: Replace the `<Azure region>` placeholder with the name of the Azure region you used in the Microsoft Learning Course Exercise.
+      > **Note**: To identify Azure regions where you can provision Azure VMs, refer to [**https://azure.microsoft.com/en-us/regions/offers/**](https://azure.microsoft.com/en-us/regions/offers/)
+
 
 #### Task 2: Inspect Jenkins pipeline
