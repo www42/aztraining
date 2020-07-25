@@ -38,16 +38,29 @@ After you complete this lab, you will
 
 1. Get the AppID of the Kubernetes cluster. Replace the `<Azure region>` placeholder with the name of the Azure region you used in the Microsoft Learning Course Exercise.
 
-```sh
-RESOURCE_GROUP='AADesignLab0403-RG'
-LOCATION='<Azure region>'
-APP_ID=$(az ad sp list --all --query "[?appDisplayName=='AADesignLab0403-SP'].[appId]" --output tsv)
-```
+    ```sh
+    RESOURCE_GROUP='AADesignLab0403-RG'
+    LOCATION='<Azure region>'
+    APP_ID=$(az ad sp list --all --query "[?appDisplayName=='AADesignLab0403-SP'].[appId]   " --output tsv)
+    ```
+
 foo bar
 
-     >**foo**:
 
-      > **Note**: To identify Azure regions where you can provision Azure VMs, refer to [**https://azure.microsoft.com/en-us/regions/offers/**](https://azure.microsoft.com/en-us/regions/offers/)
+> **Note**: To identify Azure regions where you can provision Azure VMs, refer to [**https://azure.microsoft.com/en-us/regions/offers/**](https://azure.microsoft.com/en-us/regions/offers/)
 
 
 #### Task 2: Inspect Jenkins pipeline
+
+> Das ist eine Verschachtelung. 
+
+Das ist keine Verschachtelung.
+
+    ```sh
+    foo="bar"
+    ```
+    
+    > Eingerückte Verschachtelung.
+
+
+    > Verschachtelung.
