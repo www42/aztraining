@@ -1,30 +1,29 @@
 ---
 layout: page
 lab:
-    title: 'Lab: Example'
-    module: 'Module 0: Placeholder'
+    title: 'Inspect Jenkins Pipeline and Azure Resources'
 ---
 
-# Lab: Example
-# Student lab manual
+# Lab: Inspect Jenkins Pipeline and Azure Resources
+# Follow Up to Microsoft Learning Course AZ-301T03 Lab Mod 2 Exercise 4
 
 ## Lab scenario
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus lobortis, erat vel egestas faucibus, dui magna semper velit, id congue sapien lectus id turpis. Nam egestas tempus enim. Ut venenatis vehicula ex, id rutrum odio lacinia at. Donec congue, tortor sed fermentum imperdiet, mauris mi auctor dui, ac cursus ex augue a odio. Aliquam erat volutpat. Vivamus faucibus fringilla augue in dignissim. Quisque sit amet nulla id risus gravida auctor. Ut in est varius, cursus odio rhoncus, placerat erat. Suspendisse nec metus est.
+This is a follow up to Microsoft Learning Course AZ-301T03 Lab Module 2 Exercise 4. It is assumed that you completed that lab.
 
 ## Objectives
 
 After you complete this lab, you will be able to:
 
-- Cras tincidunt massa et nunc vulputate, eget vestibulum massa tincidunt. 
+- Undestand the Jenkins pipeline. 
 
-- Maecenas suscipit at nisl vitae malesuada. 
+- Understand the Grafana - Azure Monitor connection. 
 
-- Suspendisse eu arcu id velit consequat venenatis.
+- Understand the Azure Container Registry used in the pipeline.
 
 ## Lab Setup
 
-  - **Estimated Time**: 00 minutes
+  - **Estimated Time**: 30 minutes
 
 ## Instructions
 
