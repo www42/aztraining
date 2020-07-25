@@ -8,17 +8,17 @@ lab:
 
 ## Lab scenario
 
-This is a follow up to Microsoft Learning Course [AZ-301T03 Lab Module 2 Exercise 4](https://github.com/MicrosoftLearning/AZ-301-MicrosoftAzureArchitectDesign/blob/master/Instructions/AZ-301T03_Lab_Mod02_Deploying%20Managed%20Containerized%20Workloads%20to%20Azure.md#exercise-4-implement-devops-with-aks). It is assumed that you completed that lab.
+This is a follow up to Microsoft Learning Course [AZ-301T03 Lab Module 2 Exercise 4](https://github.com/MicrosoftLearning/AZ-301-MicrosoftAzureArchitectDesign/blob/master/Instructions/AZ-301T03_Lab_Mod02_Deploying%20Managed%20Containerized%20Workloads%20to%20Azure.md#exercise-4-implement-devops-with-aks). That Microsoft lab is labled _Implement DevOps with AKS_. It is assumed that you completed that lab.
 
 ## Objectives
 
-After you complete this lab, you will be able to:
+After you complete this lab, you will 
 
-- Undestand the Jenkins pipeline. 
+- undestand the Jenkins pipeline. 
 
-- Understand the Grafana - Azure Monitor connection. 
+- understand the Grafana - Azure Monitor connection. 
 
-- Understand the Azure Container Registry used in the pipeline.
+- understand the Azure Container Registry used by the pipeline.
 
 ## Lab Setup
 
@@ -28,17 +28,19 @@ After you complete this lab, you will be able to:
 
 ### Exercise 1: 
 
-#### Task 1: 
+#### Task 1: Inspect Jenkins Pipeline
 
-1. Quisque dictum convallis metus, vitae vestibulum turpis dapibus non.
+1. In the Azure portal, open the CloudShell pane, start Bash.
 
-    1. Suspendisse commodo tempor convallis. 
+1. Get the AppID of the Kubernetes cluster
 
-    1. Nunc eget quam facilisis, imperdiet felis ut, blandit nibh. 
+```bash
+RESOURCE_GROUP='AADesignLab0403-RG'
 
-    1. Phasellus pulvinar ornare sem, ut imperdiet justo volutpat et.
+LOCATION='westeurope'
 
-1. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. 
+APP_ID=$(az ad sp list --all --query "[?appDisplayName=='AADesignLab0403-SP'].[appId]" --output tsv)
+```
 
 1. Vestibulum hendrerit orci urna, non aliquet eros eleifend vitae. 
 
