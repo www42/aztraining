@@ -41,7 +41,7 @@ After you complete this lab, you will
     ```sh
     RESOURCE_GROUP='AADesignLab0403-RG'
     LOCATION='<Azure region>'
-    APP_ID=$(az ad sp list --all --query "[?appDisplayName=='AADesignLab0403-SP'].[appId]   " --output tsv)
+    APP_ID=$(az ad sp list --all --query "[?appDisplayName=='AADesignLab0403-SP'].[appId]" --output tsv)
     ```
 
 foo bar
