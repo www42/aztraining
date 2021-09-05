@@ -6,8 +6,8 @@ In diesem Vortrag geht es um Security und Compliance in Microsofts Public Cloud 
 
 ## TOC
 
-Identity Management in Azure Active Directory
-MFA und Conditional Access - ein Traumpaar
-Priviledged Identity Management
-Network Security Groups, Application Gateway mit WAF, Azure Firewall
-Azure Policies
+* Identity Management in Azure Active Directory
+* MFA und Conditional Access - ein Traumpaar
+* Priviledged Identity Management
+* Network Security Groups, Application Gateway mit WAF, Azure Firewall
+* Azure Policies

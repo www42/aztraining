@@ -6,10 +6,10 @@ In diesem Vortrag geht es um Sinn und Zweck von Cloud Computing, um den Nutzen f
 
 ## TOC
 
-Was ist Cloud Computing? Und warum wollen das alle machen?
-Wie man eine Pizza zubereitet
-Vertraue niemandem - Authentifizierung und Autorisierung
-Die wichtigsten 100 Services in Azure
-Automatisierung - ARM und Armbeuger
-Was kostet der Spaß? Kostenabschätzung und Kostenkontrolle
-Wie kann ich Azure lernen?
+* Was ist Cloud Computing? Und warum wollen das alle machen?
+* Wie man eine Pizza zubereitet
+* Vertraue niemandem - Authentifizierung und Autorisierung
+* Die wichtigsten 100 Services in Azure
+* Automatisierung - ARM und Armbeuger
+* Was kostet der Spaß? Kostenabschätzung und Kostenkontrolle
+* Wie kann ich Azure lernen?
