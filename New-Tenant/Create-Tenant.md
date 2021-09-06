@@ -2,7 +2,7 @@
 
 **Important! Telephone number is required.**
 
-Go to <a href="https://account.azure.com/organization" target="_blank"> https://account.azure.com/organization</a>. Fill in the form.
+Open a privat (incognito) browser window. Go to <a href="https://account.azure.com/organization" target="_blank"> https://account.azure.com/organization</a>. Fill in the form.
 
 <img src="img/New-Tenant-1.png" width="600"/>
 
