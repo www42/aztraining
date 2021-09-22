@@ -16,6 +16,6 @@ Telephone number has to be correct!
 
 After completion you will be offered an Azure Free Account - Don't use it!
 
-<img src="img/New-Tenant-4.png" width="600"/>
+<!--img src="img/New-Tenant-4.png" width="600"/-->
 
 Congratulation! You have created a new Azure AD tenant.
